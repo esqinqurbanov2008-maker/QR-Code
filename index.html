@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="az">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QR Kod Yarat</title>
+
+  <title>Free QR Code Generator</title>
+  <meta name="description" content="Create free QR codes instantly from links or text. Simple, fast and easy to use.">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
@@ -69,12 +71,17 @@
 <body>
 
   <div class="box">
-    <h1>📱 QR Kod Yarat</h1>
-    <p>Link və ya mətn yaz</p>
+    <h1>📱 QR Code Generator</h1>
 
-    <input id="text" type="text" placeholder="Məsələn: https://google.com">
+    <p>Create a QR code from a link or text</p>
 
-    <button onclick="createQR()">QR KOD YARAT</button>
+    <input
+      id="text"
+      type="text"
+      placeholder="Enter a link or text..."
+    >
+
+    <button onclick="createQR()">GENERATE QR CODE</button>
 
     <div id="qrcode"></div>
   </div>
@@ -87,7 +94,7 @@
       qr.innerHTML = "";
 
       if (text.trim() === "") {
-        alert("Əvvəlcə mətn və ya link yaz!");
+        alert("Please enter a link or text!");
         return;
       }
 
