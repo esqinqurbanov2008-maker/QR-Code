@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Free QR Code Generator</title>
-  <meta name="description" content="Create and download QR codes for free. Generate QR codes from links or text instantly.">
+  <meta name="description" content="Create and download QR codes for free.">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
@@ -32,7 +32,7 @@
       padding: 30px 25px;
       border-radius: 22px;
       text-align: center;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
     }
 
     h1 {
@@ -51,12 +51,7 @@
       border: 1px solid #ddd;
       border-radius: 12px;
       font-size: 16px;
-      outline: none;
       margin-bottom: 12px;
-    }
-
-    input:focus {
-      border-color: #111;
     }
 
     button {
@@ -68,12 +63,7 @@
       color: white;
       font-size: 16px;
       font-weight: bold;
-      cursor: pointer;
       margin-top: 5px;
-    }
-
-    button:active {
-      transform: scale(0.98);
     }
 
     #qrcode {
@@ -143,19 +133,52 @@
 
     function downloadQR() {
 
-      const qrCanvas = document.querySelector("#qrcode canvas");
+      const canvas = document.querySelector("#qrcode canvas");
 
-      if (!qrCanvas) {
+      if (!canvas) {
         alert("Please generate a QR code first!");
         return;
       }
 
-      const link = document.createElement("a");
+      const image = canvas.toDataURL("image/png");
 
-      link.download = "qr-code.png";
-      link.href = qrCanvas.toDataURL("image/png");
+      const newWindow = window.open();
 
-      link.click();
+      if (newWindow) {
+
+        newWindow.document.write(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>QR Code</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          </head>
+
+          <body style="
+            margin:0;
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:#f2f2f2;
+          ">
+
+            <img
+              src="${image}"
+              style="width:90%;max-width:500px;"
+            >
+
+          </body>
+          </html>
+        `);
+
+        newWindow.document.close();
+
+      } else {
+
+        alert("Please allow pop-ups for this website.");
+
+      }
     }
 
   </script>
