@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Kod Yarat</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .box {
+      background: white;
+      width: 90%;
+      max-width: 400px;
+      padding: 25px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #666;
+    }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 16px;
+      margin: 15px 0;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: 0;
+      border-radius: 12px;
+      background: #111;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #qrcode {
+      margin: 25px auto;
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+    <h1>📱 QR Kod Yarat</h1>
+    <p>Link və ya mətn yaz</p>
+
+    <input id="text" type="text" placeholder="Məsələn: https://google.com">
+
+    <button onclick="createQR()">QR KOD YARAT</button>
+
+    <div id="qrcode"></div>
+  </div>
+
+  <script>
+    function createQR() {
+      const text = document.getElementById("text").value;
+      const qr = document.getElementById("qrcode");
+
+      qr.innerHTML = "";
+
+      if (text.trim() === "") {
+        alert("Əvvəlcə mətn və ya link yaz!");
+        return;
+      }
+
+      new QRCode(qr, {
+        text: text,
+        width: 220,
+        height: 220
+      });
+    }
+  </script>
+
+</body>
+</html>
