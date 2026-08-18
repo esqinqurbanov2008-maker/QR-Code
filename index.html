@@ -5,59 +5,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Free QR Code Generator</title>
-  <meta name="description" content="Create free QR codes instantly from links or text. Simple, fast and easy to use.">
+  <meta name="description" content="Create and download QR codes for free. Generate QR codes from links or text instantly.">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: #f2f2f2;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      padding: 20px;
     }
 
     .box {
       background: white;
-      width: 90%;
-      max-width: 400px;
-      padding: 25px;
-      border-radius: 20px;
+      width: 100%;
+      max-width: 420px;
+      padding: 30px 25px;
+      border-radius: 22px;
       text-align: center;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
     }
 
     h1 {
-      margin-bottom: 10px;
+      margin: 0 0 10px;
+      font-size: 28px;
     }
 
     p {
       color: #666;
+      margin-bottom: 20px;
     }
 
     input {
       width: 100%;
-      box-sizing: border-box;
       padding: 15px;
       border: 1px solid #ddd;
       border-radius: 12px;
       font-size: 16px;
-      margin: 15px 0;
+      outline: none;
+      margin-bottom: 12px;
+    }
+
+    input:focus {
+      border-color: #111;
     }
 
     button {
       width: 100%;
       padding: 15px;
-      border: 0;
+      border: none;
       border-radius: 12px;
       background: #111;
       color: white;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
+      margin-top: 5px;
+    }
+
+    button:active {
+      transform: scale(0.98);
     }
 
     #qrcode {
@@ -65,12 +81,18 @@
       display: flex;
       justify-content: center;
     }
+
+    #download {
+      display: none;
+      background: #2d7d46;
+    }
   </style>
 </head>
 
 <body>
 
   <div class="box">
+
     <h1>📱 QR Code Generator</h1>
 
     <p>Create a QR code from a link or text</p>
@@ -81,29 +103,61 @@
       placeholder="Enter a link or text..."
     >
 
-    <button onclick="createQR()">GENERATE QR CODE</button>
+    <button onclick="createQR()">
+      GENERATE QR CODE
+    </button>
 
     <div id="qrcode"></div>
+
+    <button id="download" onclick="downloadQR()">
+      DOWNLOAD QR CODE
+    </button>
+
   </div>
 
   <script>
+
     function createQR() {
-      const text = document.getElementById("text").value;
+
+      const text = document.getElementById("text").value.trim();
       const qr = document.getElementById("qrcode");
+      const downloadButton = document.getElementById("download");
 
       qr.innerHTML = "";
+      downloadButton.style.display = "none";
 
-      if (text.trim() === "") {
+      if (text === "") {
         alert("Please enter a link or text!");
         return;
       }
 
       new QRCode(qr, {
         text: text,
-        width: 220,
-        height: 220
+        width: 250,
+        height: 250,
+        correctLevel: QRCode.CorrectLevel.H
       });
+
+      downloadButton.style.display = "block";
     }
+
+    function downloadQR() {
+
+      const qrCanvas = document.querySelector("#qrcode canvas");
+
+      if (!qrCanvas) {
+        alert("Please generate a QR code first!");
+        return;
+      }
+
+      const link = document.createElement("a");
+
+      link.download = "qr-code.png";
+      link.href = qrCanvas.toDataURL("image/png");
+
+      link.click();
+    }
+
   </script>
 
 </body>
